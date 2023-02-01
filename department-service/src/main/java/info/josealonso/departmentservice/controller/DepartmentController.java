@@ -5,10 +5,7 @@ import info.josealonso.departmentservice.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,4 +19,11 @@ public class DepartmentController {
         DepartmentDto savedDepartment = departmentService.saveDepartment(departmentDto);
         return new ResponseEntity<>(savedDepartment, HttpStatus.CREATED);
     }
+
+    @GetMapping("{departmentCode}")
+    public ResponseEntity<DepartmentDto> getDepartment(@PathVariable String departmentCode) {
+        DepartmentDto retrievedDepartment = departmentService.getDepartmentByCode(departmentCode);
+        return new ResponseEntity<>(retrievedDepartment, HttpStatus.OK);
+    }
+
 }

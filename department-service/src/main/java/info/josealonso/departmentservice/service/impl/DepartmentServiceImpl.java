@@ -5,7 +5,6 @@ import info.josealonso.departmentservice.entity.Department;
 import info.josealonso.departmentservice.repository.DepartmentRepository;
 import info.josealonso.departmentservice.service.DepartmentService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -19,6 +18,13 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department department = convertDepartmentDtoToDepartment(departmentDto);
         Department savedDepartment = departmentRepository.save(department);
         return convertDepartmentToDepartmentDto(savedDepartment);
+    }
+
+    @Override
+    public DepartmentDto getDepartmentByCode(String departmentCode) {
+        Department department = departmentRepository.findByDepartmentCode(departmentCode);  // .orElseThrow();
+        DepartmentDto departmentDto = convertDepartmentToDepartmentDto(department);
+        return departmentDto;
     }
 
     private Department convertDepartmentDtoToDepartment(DepartmentDto departmentDto) {
