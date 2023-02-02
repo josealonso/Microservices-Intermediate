@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @AllArgsConstructor
 @Service
@@ -17,7 +18,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private static final String DEPARTMENT_URL = "http:localhost:8080/api/departments/";
     private final EmployeeRepository employeeRepository;
-    private final RestTemplate restTemplate;
+    // private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
@@ -30,10 +32,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     public APIResponseDto getEmployeeById(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow();
 
-        ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity(DEPARTMENT_URL + employee.getDepartmentCode(),
+      /*  ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity(DEPARTMENT_URL + employee.getDepartmentCode(),
                 DepartmentDto.class);
+        DepartmentDto departmentDto = responseEntity.getBody(); */
 
-        DepartmentDto departmentDto = responseEntity.getBody();
+        DepartmentDto departmentDto = webClient.get()
+                .uri(DEPARTMENT_URL + employee.getDepartmentCode())
+                .retrieve()
+                .bodyToMono(DepartmentDto.class)
+                .block();
 
         EmployeeDto employeeDto = convertEmployeeToEmployeeDto(employee);
 
