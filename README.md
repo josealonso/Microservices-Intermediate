@@ -16,3 +16,9 @@ Zipkin Server ---------> Port 9411
 curl -G https://start.spring.io/starter.zip -d dependencies=web,mysql,jpa,lombok -d type=maven-build -d groupId=info.josealonso -d artifactId=employee-service -o employee-service.zip
 curl -G https://start.spring.io/starter.zip -d dependencies=web,mysql,jpa,lombok -d type=maven-build -d groupId=info.josealonso -d artifactId=department-service -o department-service.zip
 ```
+
+### Service Registry and Discovery
+
+- We need a mechanism to call other services without hardcoding their hostnames or port numbers.
+- Since instances may come up and go anytime, we need some automatic service registration and discovery mechanism.
+
