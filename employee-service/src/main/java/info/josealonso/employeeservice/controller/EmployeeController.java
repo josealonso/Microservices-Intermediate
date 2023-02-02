@@ -1,4 +1,4 @@
-package info.josealonso.employeeservice.service.controller;
+package info.josealonso.employeeservice.controller;
 
 import info.josealonso.employeeservice.dto.APIResponseDto;
 import info.josealonso.employeeservice.dto.EmployeeDto;
