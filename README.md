@@ -4,8 +4,8 @@
 API-Gateway ----------------> Port 9191
 Department-Service ---------> Ports: 8080, 8082
 Employee-Service -----------> Port 8081
-Config-Server --------------> Port 8888
-Service Registry -----------> Port 8761
+Config-Server --------------> Port 8888 (Spring Cloud Config)
+Service Registry -----------> Port 8761 (Eureka Server)
 Organization-Service -------> Port 8083
 React-Frontend -------------> Port 3000
 Zipkin Server ---------> Port 9411
@@ -30,3 +30,7 @@ BASIC APPROACH
 
 - `cd department-service`
 - `java -jar -Dserver.port=8082 target/department-service-0.0.1-SNAPSHOT.jar`
+
+LOAD BALANCER APPROACH
+
+Eureka Server provides the Spring Cloud **load balancer** library.
