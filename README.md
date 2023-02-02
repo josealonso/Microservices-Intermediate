@@ -22,3 +22,11 @@ curl -G https://start.spring.io/starter.zip -d dependencies=web,mysql,jpa,lombok
 - We need a mechanism to call other services without hardcoding their hostnames or port numbers.
 - Since instances may come up and go anytime, we need some automatic service registration and discovery mechanism.
 
+#### Run multiple instances of the same microservice
+
+To run another instance of *department-service*
+
+BASIC APPROACH
+
+- `cd department-service`
+- `java -jar -Dserver.port=8082 target/department-service-0.0.1-SNAPSHOT.jar`
