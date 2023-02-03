@@ -1,4 +1,3 @@
-
 ### PORTS MAPPING
 
 API-Gateway ----------------> Port 9191
@@ -22,6 +21,8 @@ curl -G https://start.spring.io/starter.zip -d dependencies=web,mysql,jpa,lombok
 - We need a mechanism to call other services without hardcoding their hostnames or port numbers.
 - Since instances may come up and go anytime, we need some automatic service registration and discovery mechanism.
 
+The **@EnableEurekaClient** annotation was removed in spring cloud 2022.0.0 and provided auto-configuration.
+
 #### Run multiple instances of the same microservice
 
 To run another instance of *department-service*
@@ -39,8 +40,9 @@ Eureka Server provides the Spring Cloud **load balancer** library.
 
 It provides a unified interface for a set of microservices so that clients no need to know the microservices internals.
 It centralizes cross-cutting concerns like security, monitoring or rate limiting.
+
 - Route request.
 - Load balancing.
 - Security.
-Spring Cloud provides **Spring Cloud Gateway** to create an API Gateway.
+  Spring Cloud provides **Spring Cloud Gateway** to create an API Gateway.
 
