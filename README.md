@@ -74,9 +74,14 @@ All the microservices are subscribed to this event.
       Broker                microservices          Server
 
 
-Install and run RabbitMQ
+**Install and run RabbitMQ**
 
 `docker pull rabbitmq:3.11.0`
 
 `docker run --rm -it -p 5672:5672 rabbitmq:3.11.0`
+
+**Testing it**
+
+GET http://localhost:8080/message
+GET http://localhost:8081/users/message
 
