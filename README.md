@@ -111,3 +111,22 @@ As a result, the traces would have the format:
 
 **Zipkin** is a widely used library.
 
+### Mechanisms or patterns implemented by Resilience4j 
+
+- Fallback method
+- Circuit breaker
+  3 states: 
+  - closed ---> allows to flow the request between two microservices.
+  - open -----> that circuit is closed during a configurable time limit. 
+  - half open ---> only certain number of calls are allowed. 
+  It goes to open state or to closed state based on the response. 
+- Retry
+- Rate Limiter
+
+
+
+
+
+
+
+
