@@ -34,3 +34,13 @@ BASIC APPROACH
 LOAD BALANCER APPROACH
 
 Eureka Server provides the Spring Cloud **load balancer** library.
+
+### API Gateway
+
+It provides a unified interface for a set of microservices so that clients no need to know the microservices internals.
+It centralizes cross-cutting concerns like security, monitoring or rate limiting.
+- Route request.
+- Load balancing.
+- Security.
+Spring Cloud provides **Spring Cloud Gateway** to create an API Gateway.
+
