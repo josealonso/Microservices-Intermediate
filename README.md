@@ -88,3 +88,26 @@ GET http://localhost:8081/users/message
 
 A POST call to **http://localhost:8080/actuator/busrefresh**
 will tell the message broker to broadcast the configuration changes to the respecting microservices.
+
+### Distributed Tracing
+
+Track the complete request across all the microservices, from start to end.
+Keep track of how much time the microservice will take to process the request.
+Trace id is the same for each request.
+Span id is the same for each microservice.
+
+**Spring Cloud Sleuth** was used in Spring Boot 2.x projects.
+
+The Spring Cloud Sleuth dependency would be added to the following projects: 
+api-gateway, department-service and employee-service.
+
+As a result, the traces would have the format:
+
+```   
+  [Service name, Trace id, Span id]
+```  
+
+#### Visualize Trace information
+
+**Zipkin** is a widely used library.
+
