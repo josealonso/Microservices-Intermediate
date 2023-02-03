@@ -85,3 +85,6 @@ All the microservices are subscribed to this event.
 GET http://localhost:8080/message
 GET http://localhost:8081/users/message
 
+
+A POST call to **http://localhost:8080/actuator/busrefresh**
+will tell the message broker to broadcast the configuration changes to the respecting microservices.
