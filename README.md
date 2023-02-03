@@ -46,3 +46,12 @@ It centralizes cross-cutting concerns like security, monitoring or rate limiting
 - Security.
   Spring Cloud provides **Spring Cloud Gateway** to create an API Gateway.
 
+### Config Server
+
+- No need to restart the microservice after modifying its configuration. 
+- Externalized configuration.
+
+
+
+
+
