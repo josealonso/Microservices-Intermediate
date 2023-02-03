@@ -16,6 +16,10 @@ curl -G https://start.spring.io/starter.zip -d dependencies=web,mysql,jpa,lombok
 curl -G https://start.spring.io/starter.zip -d dependencies=web,mysql,jpa,lombok -d type=maven-build -d groupId=info.josealonso -d artifactId=department-service -o department-service.zip
 ```
 
+### Spring Boot Actuator
+
+Only **/info** and **/health** endpoints are enabled by default.
+
 ### Service Registry and Discovery
 
 - We need a mechanism to call other services without hardcoding their hostnames or port numbers.
@@ -53,8 +57,12 @@ It centralizes cross-cutting concerns like security, monitoring or rate limiting
 
   Create a github repository: https://github.com/josealonso/config-server-repo
 
+#### Refresh Use Case
 
+We do not want to restart the microservice whenever we change the configuration file.
 
+Solution ---> call the Spring Boot Actuator **/refresh** API to reload the updated values 
+from the Config Server.
 
 
 
