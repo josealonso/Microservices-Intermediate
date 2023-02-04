@@ -4,6 +4,7 @@ import info.josealonso.employeeservice.dto.APIResponseDto;
 import info.josealonso.employeeservice.dto.DepartmentDto;
 import info.josealonso.employeeservice.dto.EmployeeDto;
 import info.josealonso.employeeservice.entity.Employee;
+import info.josealonso.employeeservice.mapper.EmployeeMapper;
 import info.josealonso.employeeservice.repository.EmployeeRepository;
 import info.josealonso.employeeservice.service.APIClient;
 import info.josealonso.employeeservice.service.EmployeeService;
@@ -30,9 +31,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
-        Employee employee = convertEmployeeDtoToEmployee(employeeDto);
+        Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
         Employee savedEmployee = employeeRepository.save(employee);
-        return convertEmployeeToEmployeeDto(savedEmployee);
+        return EmployeeMapper.mapToEmployeeDto(savedEmployee);
     }
 
 //    @CircuitBreaker(name = "${spring.application.name}", fallbackMethod = "getDefaultDepartment")
@@ -54,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 //        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
 
-        EmployeeDto employeeDto = convertEmployeeToEmployeeDto(employee);
+        EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
         APIResponseDto apiResponseDto = APIResponseDto.builder()
                 .employee(employeeDto)
@@ -73,7 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .departmentDescription("Research and Development Department")
                 .build();
 
-        EmployeeDto employeeDto = convertEmployeeToEmployeeDto(employee);
+        EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
         APIResponseDto apiResponseDto = APIResponseDto.builder()
                 .employee(employeeDto)
@@ -82,23 +83,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         return apiResponseDto;
     }
 
-    private Employee convertEmployeeDtoToEmployee(EmployeeDto employeeDto) {
-        return Employee.builder()
-                .id(employeeDto.getId())
-                .firstName(employeeDto.getFirstName())
-                .lastName(employeeDto.getLastName())
-                .email(employeeDto.getEmail())
-                .departmentCode(employeeDto.getDepartmentCode())
-                .build();
-    }
-
-    private EmployeeDto convertEmployeeToEmployeeDto(Employee employee) {
-        return EmployeeDto.builder()
-                .id(employee.getId())
-                .firstName(employee.getFirstName())
-                .lastName(employee.getLastName())
-                .email(employee.getEmail())
-                .departmentCode(employee.getDepartmentCode())
-                .build();
-    }
 }
