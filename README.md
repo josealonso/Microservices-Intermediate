@@ -3,6 +3,7 @@
 API-Gateway ----------------> Port 9191
 Department-Service ---------> Ports: 8080, 8082
 Employee-Service -----------> Port 8081
+Organization-Service -------> Port 8083
 Config-Server --------------> Port 8888 (Spring Cloud Config)
 Service Registry -----------> Port 8761 (Eureka Server)
 Organization-Service -------> Port 8083
