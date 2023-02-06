@@ -17,6 +17,24 @@ curl -G https://start.spring.io/starter.zip -d dependencies=web,mysql,jpa,lombok
 curl -G https://start.spring.io/starter.zip -d dependencies=web,mysql,jpa,lombok -d type=maven-build -d groupId=info.josealonso -d artifactId=department-service -o department-service.zip
 ```
 
+### Testing a service with httpie
+
+`http -v get http://localhost:8083/api/v1/organizations/test` or
+`http -v get localhost:8083/api/v1/organizations/test`        or
+`http -v get :8083/api/v1/organizations/test`
+
+**saveOrganization**
+
+```
+http -v post :8083/api/v1/organizations id:=7 organizationName=ABCd organizationCode=ABC_23Y
+organizationDescription="........"
+```
+
+**getOrganizationByCode**
+
+`http -v get :8083/api/v1/organizations/ABC_23Y`
+
+
 ### Spring Boot Actuator
 
 Only **/info** and **/health** endpoints are enabled by default.
