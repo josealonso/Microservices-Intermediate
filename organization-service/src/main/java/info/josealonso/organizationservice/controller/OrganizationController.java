@@ -28,6 +28,8 @@ public class OrganizationController {
         OrganizationDto organizationDto = organizationService.getOrganizationByCode(organizationCode);
         return new ResponseEntity(organizationDto, HttpStatus.OK);
     }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @PostMapping
     public ResponseEntity<OrganizationDto> saveOrganization(
             @RequestBody @NotNull OrganizationDto organizationDto) {

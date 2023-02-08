@@ -10,9 +10,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDateTime;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -70,7 +72,7 @@ public class OrganizationControllerTests {
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.id").value(organizationDto.getId()))
                 .andExpect(jsonPath("$.organizationCode").isString())
-                .andExpect(jsonPath("$.organizationCode").value(CODE))
+                .andExpect(jsonPath("$.organizationCode").value(organizationDto.getOrganizationCode()))
                 .andExpect(jsonPath("$.organizationName").value(organizationDto.getOrganizationName()))
                 .andExpect(jsonPath("$.organizationDescription").value(organizationDto.getOrganizationDescription()))
                 // toString() is required
@@ -104,19 +106,15 @@ public class OrganizationControllerTests {
     }
 
     @Test
-    void saveOrganizationFailsTest() throws Exception {
+    void saveOrganizationFailsBadRequestTest() throws Exception {
 
-        OrganizationDto organizationDtoWithNoCodeField = OrganizationDto.builder()
-                .id(2L)
-                .organizationName(TEST_NAME)
-                .organizationDescription("test-description")
-                .createdAt(LocalDateTime.now())
-                .build();
+        given(organizationService.saveOrganization(any()))
+                .willThrow(HttpClientErrorException.BadRequest.class);
 
         this.mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isBadRequest())   // This expectation is not working !!
                 .andDo(print());
     }
 
@@ -124,7 +122,7 @@ public class OrganizationControllerTests {
     void saveOrganizationFailsMethodNotAllowedTest() throws Exception {
         given(organizationService.saveOrganization(organizationDto)).willReturn(organizationDto);
 
-            this.mockMvc.perform(get(BASE_URL)
+        this.mockMvc.perform(get(BASE_URL)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isMethodNotAllowed())
