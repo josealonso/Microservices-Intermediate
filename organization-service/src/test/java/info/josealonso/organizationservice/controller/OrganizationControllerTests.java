@@ -18,8 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(OrganizationController.class)
 public class OrganizationControllerTests {
@@ -69,6 +68,13 @@ public class OrganizationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.id").value(organizationDto.getId()))
+                .andExpect(jsonPath("$.organizationCode").isString())
+                .andExpect(jsonPath("$.organizationCode").value(CODE))
+                .andExpect(jsonPath("$.organizationName").value(organizationDto.getOrganizationName()))
+                .andExpect(jsonPath("$.organizationDescription").value(organizationDto.getOrganizationDescription()))
+                // toString() is required
+                .andExpect(jsonPath("$.createdAt").value(organizationDto.getCreatedAt().toString()))
                 .andDo(print());
 
         verify(organizationService).getOrganizationByCode(CODE);
@@ -118,7 +124,7 @@ public class OrganizationControllerTests {
     void saveOrganizationFailsMethodNotAllowedTest() throws Exception {
         given(organizationService.saveOrganization(organizationDto)).willReturn(organizationDto);
 
-        this.mockMvc.perform(get(BASE_URL)
+            this.mockMvc.perform(get(BASE_URL)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isMethodNotAllowed())
