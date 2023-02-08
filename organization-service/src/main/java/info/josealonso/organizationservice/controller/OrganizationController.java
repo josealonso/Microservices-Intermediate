@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/v1/organizations")
@@ -26,7 +29,9 @@ public class OrganizationController {
         return new ResponseEntity(organizationDto, HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<OrganizationDto> saveOrganization(@RequestBody OrganizationDto organizationDto) {
+    public ResponseEntity<OrganizationDto> saveOrganization(
+            @RequestBody @NotNull OrganizationDto organizationDto) {
+
         OrganizationDto savedOrganization = organizationService.saveOrganization(organizationDto);
         return new ResponseEntity(savedOrganization, HttpStatus.CREATED);
     }

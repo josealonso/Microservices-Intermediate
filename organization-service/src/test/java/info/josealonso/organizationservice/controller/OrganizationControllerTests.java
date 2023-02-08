@@ -97,6 +97,33 @@ public class OrganizationControllerTests {
 //        verify(organizationService).saveOrganization(organizationDto);
     }
 
+    @Test
+    void saveOrganizationFailsTest() throws Exception {
+
+        OrganizationDto organizationDtoWithNoCodeField = OrganizationDto.builder()
+                .id(2L)
+                .organizationName(TEST_NAME)
+                .organizationDescription("test-description")
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        this.mockMvc.perform(post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    void saveOrganizationFailsMethodNotAllowedTest() throws Exception {
+        given(organizationService.saveOrganization(organizationDto)).willReturn(organizationDto);
+
+        this.mockMvc.perform(get(BASE_URL)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isMethodNotAllowed())
+                .andDo(print());
+    }
 }
 
 
