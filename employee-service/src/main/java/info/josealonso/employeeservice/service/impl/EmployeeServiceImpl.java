@@ -3,6 +3,7 @@ package info.josealonso.employeeservice.service.impl;
 import info.josealonso.employeeservice.dto.APIResponseDto;
 import info.josealonso.employeeservice.dto.DepartmentDto;
 import info.josealonso.employeeservice.dto.EmployeeDto;
+import info.josealonso.employeeservice.dto.OrganizationDto;
 import info.josealonso.employeeservice.entity.Employee;
 import info.josealonso.employeeservice.mapper.EmployeeMapper;
 import info.josealonso.employeeservice.repository.EmployeeRepository;
@@ -22,7 +23,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private static final String DEPARTMENT_URL = "http:localhost:8080/api/departments/";
-
+    private static final String ORGANIZATION_URL = "http:localhost:8083/api/organizations/";
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
     private final EmployeeRepository employeeRepository;
     // private final RestTemplate restTemplate;
@@ -55,11 +56,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 //        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
 
+        OrganizationDto organizationDto = webClient.get()
+                .uri(ORGANIZATION_URL + employee.getOrganizationCode())
+                .retrieve()
+                .bodyToMono(OrganizationDto.class)
+                .block();
+
         EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
         APIResponseDto apiResponseDto = APIResponseDto.builder()
                 .employee(employeeDto)
                 .department(departmentDto)
+                .organization(organizationDto)
                 .build();
         return apiResponseDto;
     }
